@@ -2,6 +2,7 @@
 
 module.exports = {
 	theme: {
+		slug: 'siderig',
 		name: 'Siderig',
 		author: 'pbrocks && Morten Rand-Hendriksen'
 	},

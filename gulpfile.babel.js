@@ -11,13 +11,13 @@ import autoprefixer from 'autoprefixer';
 import browserSync from 'browser-sync';
 import cssnano from 'gulp-cssnano';
 import babel from 'gulp-babel';
-import cssnext from 'postcss-cssnext';
 import eslint from 'gulp-eslint';
 import log from 'fancy-log';
 import gulpif from 'gulp-if';
 import image from 'gulp-image';
 import newer from 'gulp-newer';
 import partialImport from 'postcss-partial-import';
+import postcssPresetEnv from 'postcss-preset-env';
 import phpcs from 'gulp-phpcs';
 import postcss from 'gulp-postcss';
 import print from 'gulp-print';
@@ -33,11 +33,14 @@ import zip from 'gulp-zip';
 
 // Import theme-specific configurations.
 var config = require('./dev/config/themeConfig.js');
+var themeConfig = config.theme;
+themeConfig.isFirstRun = true;
 
 // Project paths
 const paths = {
 	config: {
-		cssVars: './dev/config/cssVariables.json'
+		cssVars: './dev/config/cssVariables.json',
+		themeConfig: './dev/config/themeConfig.js'
 	},
 	php: {
 		src: ['dev/**/*.php', '!dev/optional/**/*.*'],
@@ -111,8 +114,23 @@ function reload(done) {
  */
 export function php() {
 	config = requireUncached('./dev/config/themeConfig.js');
+	// Check if theme slug has been updated.
+	let isRebuild = themeConfig.isFirstRun ||
+		( themeConfig.slug !== config.theme.slug ) ||
+		( themeConfig.name !== config.theme.name );
+	if ( isRebuild ) {
+		themeConfig.slug = config.theme.slug;
+		themeConfig.name = config.theme.name;
+	}
+
+	// Reset first run.
+	if ( themeConfig.isFirstRun ) {
+		themeConfig.isFirstRun = false;
+	}
+
 	return gulp.src(paths.php.src)
-	.pipe(newer(paths.php.dest))
+	// If not a rebuild, then run tasks on changed files only.
+	.pipe(gulpif(!isRebuild, newer(paths.php.dest)))
 	.pipe(phpcs({
 		bin: 'vendor/bin/phpcs',
 		standard: 'WordPress',
@@ -120,9 +138,11 @@ export function php() {
 	}))
 	// Log all problems that was found
 	.pipe(phpcs.reporter('log'))
-	.pipe(replace('wprig', config.theme.name))
+	.pipe(replace('wprig', config.theme.slug))
+	.pipe(replace('WP Rig', config.theme.name))
 	.pipe(gulp.dest(paths.verbose))
 	.pipe(gulp.dest(paths.php.dest));
+
 }
 
 /**
@@ -156,19 +176,23 @@ export function styles() {
 	// Log all problems that was found
 	.pipe(phpcs.reporter('log'))
 	.pipe(postcss([
-		cssnext({
+		postcssPresetEnv({
+			stage: 3,
 			browsers: config.dev.browserslist,
 			features: {
-				customProperties: {
+				'custom-properties': {
+					preserve: false,
 					variables: cssVars.variables,
 				},
-				customMedia: {
+				'custom-media-queries': {
+					preserve: false,
 					extensions: cssVars.queries,
 				}
 			}
 		})
 	]))
-	.pipe(replace('wprig', config.theme.name))
+	.pipe(replace('wprig', config.theme.slug))
+	.pipe(replace('WP Rig', config.theme.name))
 	.pipe(gulp.dest(paths.verbose))
 	.pipe(gulpif(!config.dev.debug.styles, cssnano()))
 	.pipe(gulp.dest(paths.styles.dest));
@@ -187,7 +211,8 @@ export function scripts() {
 	.pipe(babel())
 	.pipe(gulp.dest(paths.verbose))
 	.pipe(gulpif(!config.dev.debug.scripts, uglify()))
-	.pipe(replace('wprig', config.theme.name))
+	.pipe(replace('wprig', config.theme.slug))
+	.pipe(replace('WP Rig', config.theme.name))
 	.pipe(gulp.dest(paths.scripts.dest));
 }
 
@@ -229,6 +254,7 @@ export function images() {
  */
 export function watch() {
 	gulp.watch(paths.php.src, gulp.series(php, reload));
+	gulp.watch(paths.config.themeConfig, gulp.series(php, reload));
 	gulp.watch(paths.config.cssVars, gulp.series(styles, reload));
 	gulp.watch(paths.styles.sass, sassStyles);
 	gulp.watch(paths.styles.src, gulp.series(styles, reload));
