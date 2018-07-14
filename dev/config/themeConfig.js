@@ -2,13 +2,13 @@
 
 module.exports = {
 	theme: {
-		name: 'wprig',
-		author: 'Morten Rand-Hendriksen'
+		name: 'Siderig',
+		author: 'pbrocks && Morten Rand-Hendriksen'
 	},
 	dev: {
 		browserSync: {
 			live: true,
-			proxyURL: 'wprig.test:8888',
+			proxyURL: 'http://4react.local/',
 			bypassPort: '8181'
 		},
 		browserslist: [ // See https://github.com/browserslist/browserslist
