@@ -59,6 +59,7 @@ Nicolas Gallagher and Jonathan Neal http://necolas.github.io/normalize.css/
 
 body {
 	margin: 0;
+	background: red;
 }
 
 link {

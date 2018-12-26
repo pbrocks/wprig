@@ -2,14 +2,14 @@
 
 module.exports = {
 	theme: {
-		slug: 'siderig',
-		name: 'Siderig',
+		slug: 'blockshop',
+		name: 'BlockShop',
 		author: 'pbrocks && Morten Rand-Hendriksen'
 	},
 	dev: {
 		browserSync: {
 			live: true,
-			proxyURL: 'http://4react.local/',
+			proxyURL: 'blockshop.local',
 			bypassPort: '8181'
 		},
 		browserslist: [ // See https://github.com/browserslist/browserslist
