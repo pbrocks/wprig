@@ -90,55 +90,70 @@ function wprig_setup() {
 	);
 
 	/**
+	 * Add support for default block styles.
+	 *
+	 * @link https://wordpress.org/gutenberg/handbook/extensibility/theme-support/#default-block-styles
+	 */
+	add_theme_support( 'wp-block-styles' );
+	/**
 	 * Add support for wide aligments.
 	 *
-	 * @link https://wordpress.org/gutenberg/handbook/extensibility/theme-support/
+	 * @link https://wordpress.org/gutenberg/handbook/extensibility/theme-support/#wide-alignment
 	 */
 	add_theme_support( 'align-wide' );
 
 	/**
 	 * Add support for block color palettes.
 	 *
-	 * @link https://wordpress.org/gutenberg/handbook/extensibility/theme-support/
+	 * @link https://wordpress.org/gutenberg/handbook/extensibility/theme-support/#block-color-palettes
 	 */
-	add_theme_support( 'editor-color-palette',
+	add_theme_support( 'editor-color-palette', array(
 		array(
-			'name'  => 'Dusty orange',
-			'color' => '#ED8F5B',
+			'name'  => __( 'Dusty orange', 'wprig' ),
+			'slug'  => 'dusty-orange',
+			'color' => '#ed8f5b',
 		),
 		array(
-			'name'  => 'Dusty red',
-			'color' => '#E36D60',
+			'name'  => __( 'Dusty red', 'wprig' ),
+			'slug'  => 'dusty-red',
+			'color' => '#e36d60',
 		),
 		array(
-			'name'  => 'Dusty wine',
-			'color' => '#9C4368',
+			'name'  => __( 'Dusty wine', 'wprig' ),
+			'slug'  => 'dusty-wine',
+			'color' => '#9c4368',
 		),
 		array(
-			'name'  => 'Dark sunset',
-			'color' => '#33223B',
+			'name'  => __( 'Dark sunset', 'wprig' ),
+			'slug'  => 'dark-sunset',
+			'color' => '#33223b',
 		),
 		array(
-			'name'  => 'Almost black',
-			'color' => '#0A1C28',
+			'name'  => __( 'Almost black', 'wprig' ),
+			'slug'  => 'almost-black',
+			'color' => '#0a1c28',
 		),
 		array(
-			'name'  => 'Dusty water',
-			'color' => '#41848F',
+			'name'  => __( 'Dusty water', 'wprig' ),
+			'slug'  => 'dusty-water',
+			'color' => '#41848f',
 		),
 		array(
-			'name'  => 'Dusty sky',
-			'color' => '#72A7A3',
+			'name'  => __( 'Dusty sky', 'wprig' ),
+			'slug'  => 'dusty-sky',
+			'color' => '#72a7a3',
 		),
 		array(
-			'name'  => 'Dusty daylight',
-			'color' => '#97C0B7',
+			'name'  => __( 'Dusty daylight', 'wprig' ),
+			'slug'  => 'dusty-daylight',
+			'color' => '#97c0b7',
 		),
 		array(
-			'name'  => 'Dusty sun',
-			'color' => '#EEE9D1',
-		)
-	);
+			'name'  => __( 'Dusty sun', 'wprig' ),
+			'slug'  => 'dusty-sun',
+			'color' => '#eee9d1',
+		),
+	) );
 
 	/**
 	 * Optional: Disable custom colors in block color palettes.
@@ -147,6 +162,38 @@ function wprig_setup() {
 	 *
 	 * add_theme_support( 'disable-custom-colors' );
 	 */
+
+	/**
+	 * Add support for font sizes.
+	 *
+	 * @link https://wordpress.org/gutenberg/handbook/extensibility/theme-support/#block-font-sizes
+	 */
+	add_theme_support( 'editor-font-sizes', array(
+		array(
+			'name'      => __( 'small', 'wprig' ),
+			'shortName' => __( 'S', 'wprig' ),
+			'size'      => 16,
+			'slug'      => 'small',
+		),
+		array(
+			'name'      => __( 'regular', 'wprig' ),
+			'shortName' => __( 'M', 'wprig' ),
+			'size'      => 20,
+			'slug'      => 'regular',
+		),
+		array(
+			'name'      => __( 'large', 'wprig' ),
+			'shortName' => __( 'L', 'wprig' ),
+			'size'      => 36,
+			'slug'      => 'large',
+		),
+		array(
+			'name'      => __( 'larger', 'wprig' ),
+			'shortName' => __( 'XL', 'wprig' ),
+			'size'      => 48,
+			'slug'      => 'larger',
+		),
+	) );
 
 	/**
 	 * Optional: Add AMP support.
@@ -239,7 +286,7 @@ add_filter( 'wp_resource_hints', 'wprig_resource_hints', 10, 2 );
  */
 function wprig_gutenberg_styles() {
 	// Add custom fonts, used in the main stylesheet.
-	wp_enqueue_style( 'wprig-fonts', wprig_fonts_url(), array(), null );
+	wp_enqueue_style( 'wprig-fonts', wprig_fonts_url(), array(), null ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
 
 	// Enqueue main stylesheet.
 	wp_enqueue_style( 'wprig-base-style', get_theme_file_uri( '/css/editor-styles.css' ), array(), '20180514' );
@@ -269,7 +316,7 @@ add_action( 'widgets_init', 'wprig_widgets_init' );
  */
 function wprig_styles() {
 	// Add custom fonts, used in the main stylesheet.
-	wp_enqueue_style( 'wprig-fonts', wprig_fonts_url(), array(), null );
+	wp_enqueue_style( 'wprig-fonts', wprig_fonts_url(), array(), null ); // phpcs:ignore WordPress.WP.EnqueuedResourceParameters.MissingVersion
 
 	// Enqueue main stylesheet.
 	wp_enqueue_style( 'wprig-base-style', get_stylesheet_uri(), array(), '20180514' );

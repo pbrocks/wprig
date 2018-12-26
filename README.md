@@ -4,7 +4,7 @@
 # WP Rig: WordPress Theme Boilerplate
 [![Build Status](https://travis-ci.com/wprig/wprig.svg?branch=master)](https://travis-ci.com/wprig/wprig)
 [![License: GPL](https://img.shields.io/aur/license/yaourt.svg)](https://www.gnu.org/licenses/gpl-3.0.en.html)
-![WP Rig version 1.0.1](https://img.shields.io/badge/version-1.0.1-blue.svg)
+![WP Rig version 1.0.4](https://img.shields.io/badge/version-1.0.4-blue.svg)
 
 ## Your Performance-Focused Development Rig
 A progressive theme development rig for WordPress, WP Rig is built to promote the latest best practices for progressive web content and optimization. Building a theme from WP Rig means adopting this approach and the core principles it is built on:
@@ -16,6 +16,14 @@ A progressive theme development rig for WordPress, WP Rig is built to promote th
 - Progressive Web App enabled
 - AMP-ready
 
+## Office Hours
+WP Rig office hours take place every other Thursday from 5:30 - 6:30 p.m. UTC, starting January 10, 2019.
+
+Join WP Rig core maintainers to chat about the project, work alongside other devs, discuss ideas, address bugs, and more.
+
+- [View the WP Rig Google Calendar](https://calendar.google.com/calendar/embed?src=wprigio%40gmail.com&ctz=America%2FChicago) to see dates and find info to join the discussion
+- [Subscribe to the WP Rig Google Calendar](https://calendar.google.com/calendar?cid=d3ByaWdpb0BnbWFpbC5jb20) to stay informed.
+
 ## Installation
 WP Rig has been tested on Linux, Mac, and Windows.
 
@@ -24,7 +32,7 @@ WP Rig requires the following dependencies. Full installation instructions are p
 
 - [PHP](http://php.net/) 7.0
 - [npm](https://www.npmjs.com/)
-- [Composer](https://getcomposer.org/)
+- [Composer](https://getcomposer.org/) (installed globally)
 
 ### How to install WP Rig:
 1. Clone or download this repository to the themes folder of a WordPress site on your development environment.
@@ -47,11 +55,13 @@ WP Rig uses [BrowserSync](https://browsersync.io/) to enable synchronized browse
 
 WP Rig uses a [Gulp 4](https://gulpjs.com/) build process to generate and optimize the code for the theme. All development is done in the `/dev` folder and Gulp preprocesses, transpiles, and compiles the files into the root folder. The root folder files become the active theme. WordPress ignores anything in the `/dev` folder.
 
-**Note:** If you have previously used Gulp, you may encounter seemingly random errors that prevent the build process from running. To fix this issue, [upgrade to Gulp 4 following the steps outlined here](https://github.com/pattern-lab/edition-node-gulp/wiki/Updating-to-Gulp-4).
+**Note:** If you have previously used Gulp, you may encounter seemingly random errors that prevent the build process from running. To fix this issue, [upgrade to Gulp 4 following the steps outlined in the WP Rig Wiki](https://github.com/wprig/wprig/wiki/Updating-to-Gulp-4).
 
 JavaScript files are automatically linted using [ESLint](https://eslint.org/) in accordance with [WordPress Coding Standards](https://make.wordpress.org/core/handbook/best-practices/coding-standards/).
 
-PHP and CSS files are automatically linted using [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) in accordance with [WordPress Coding Standards](https://make.wordpress.org/core/handbook/best-practices/coding-standards/). To take full advantage of this setup, configure your code editor / IDE to automatically test for the WordPress Coding Standards. More details can be found at the [WordPress Coding Standards Wiki](https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/wiki). `composer run-phpcs` runs PHPCS locally.
+PHP and CSS files are automatically linted using [PHP CodeSniffer](https://github.com/squizlabs/PHP_CodeSniffer) in accordance with [WordPress Coding Standards](https://make.wordpress.org/core/handbook/best-practices/coding-standards/). To take full advantage of this setup, configure your code editor / IDE to automatically test for the WordPress Coding Standards.
+
+Details on how to enable PHPCS in VS Code can be found in the [WP Rig Wiki](https://github.com/wprig/wprig/wiki/Enabling-PHPCodeSniffer-(PHPCS)-in-VS-Code). More details on how to work with PHPCS and WordPress Coding Standards can be found at the [WordPress Coding Standards Wiki](https://github.com/WordPress-Coding-Standards/WordPress-Coding-Standards/wiki). `composer run-phpcs` runs PHPCS locally.
 
 ### `build` process
 `npm run build` is the regular development process. While this process is running, files in the `./dev/` folder will be automatically compiled to the live theme and BrowserSync will update if it is enabled.
@@ -136,14 +146,3 @@ The CSS philosophy of WP Rig breaks down as follows:
 
 ## License
 WP Rig is released under [GNU General Public License v3.0](https://github.com/wprig/wprig/blob/master/LICENSE).
-
-# Changelog
-
-## 1.0.1
-- PHP process updated to run conditionally on theme name and theme slug rename and on first run. Props @hellofromtonya.
-- Introduce guard clause to simplify wprig_is_amp() condition around wprig_scripts(). Props @Tabrisrp.
-- Remove extraneous variable $post_count from index.php. Props @Soean.
-
-## Initial release
-- cssnext replaced with postcss-preset-env. No change in functionality. Props @mor10
-- Separate theme name and theme slug in `themeConfig.js`. Props @felixarntz.
