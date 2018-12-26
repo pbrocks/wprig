@@ -2,14 +2,14 @@
 
 module.exports = {
 	theme: {
-		slug: 'blockshop',
-		name: 'BlockShop',
+		slug: 'family',
+		name: 'Family',
 		author: 'pbrocks && Morten Rand-Hendriksen'
 	},
 	dev: {
 		browserSync: {
 			live: true,
-			proxyURL: 'blockshop.local',
+			proxyURL: 'family.local',
 			bypassPort: '8181'
 		},
 		browserslist: [ // See https://github.com/browserslist/browserslist
